@@ -62,7 +62,7 @@ namespace WindowsFormsApp1
             for (int i = 0; i < lines1.Length; i++)
             {
                 before += lines1[i] + Environment.NewLine;
-                after += lines1[i];
+                after += lines1[i]+'\n';
             }
             richTextBox1.Text = before;
             /* StreamReader file = new StreamReader(@x);
@@ -85,14 +85,22 @@ namespace WindowsFormsApp1
            
 
         }
-        public string getToken(string input )
+       public class Token
+        {
+            public string Tokenvalue;
+            public string Tokentype;
+        }
+        public void getToken(string input, Token t )
         {
             state = states.START;
+
             // s Reserve;
             bool flag = false;
             string[] Reserve = new string[] { "if", "then", "else", "end", "repeat", "until", "read", "write" };
             string token = null;
             string token1 = null;
+           //Token t=new Token();
+           
             while (state != states.DONE && state != states.ERROR)
             {
                 switch (state)
@@ -116,7 +124,7 @@ namespace WindowsFormsApp1
                         }
                         else if (isDigit(input[j]))
                         {
-                            /*if scanned character is digit then go to state NUM*/
+                            /*if scanned character is digit then go to state INNUM*/
                             state = states.NUM;
                         }
                         else if (isLetter(input[j]))
@@ -133,12 +141,17 @@ namespace WindowsFormsApp1
                             {
                                 if (input[j - 1] != ':')
                                 {
-                                    token1 = input[j] + " , Symbol \n";
+                                    //token1 = ;
+                                    t.Tokenvalue = input[j].ToString();
+                                    t.Tokentype = ", Symbol \n";
+
                                 }
                             }
                             else
                             {
-                                token1 = input[j] + " , Symbol \n";
+                                //token1 = input[j] + " Symbol \n";
+                                t.Tokenvalue = input[j].ToString();
+                                t.Tokentype = ", Symbol \n";
                             }
 
                             /*if this symbol is the last one in the input string then go to state DONE,
@@ -179,7 +192,9 @@ namespace WindowsFormsApp1
                         {
                             state = states.DONE;
                             token = ":=";
-                            token1 = token + ",Assign\n";
+                            t.Tokenvalue = token;
+                             t.Tokentype = ", Assign \n";
+                            //t.Tokentype = ", reserved word \n";
                         }
                         else
                         {
@@ -207,8 +222,10 @@ namespace WindowsFormsApp1
                         {
                             if (token == Reserve[i])
                             {
-                                token1 =
-                                   token + " , reserved word \n";
+                                // token1 =
+                                //  token + " , reserved word \n";
+                                t.Tokenvalue = token;
+                                t.Tokentype=", reserved word \n";
                                 flag = true;
                                 break;
                             }
@@ -216,8 +233,10 @@ namespace WindowsFormsApp1
                         }
                         if(flag==false)
                         {
-                            token1 =
-                            token + " ,  identifier \n";
+                            //token1 =
+                            //token + " ,  identifier \n";
+                            t.Tokenvalue = token;
+                            t.Tokentype = ",  identifier \n";
                         }
                         
                          state = states.DONE;
@@ -263,13 +282,16 @@ namespace WindowsFormsApp1
                         {
                             token += input[j];
                             j++;
+                            t.Tokenvalue = token;
+                            
                         }
 
                         //label1.Text += mytoken += " , IS NUMBER \n";
-                        token1 = token + " , NUMBER \n";
-                        //token = "";
-                        
-                            /* go to done state */
+                        // token1 = token + ;
+                        t.Tokentype = ", Number \n";
+                            //token = "";
+
+                        /* go to done state */
                             state = states.DONE;
                        
                         
@@ -280,7 +302,7 @@ namespace WindowsFormsApp1
                         break;
                 }
             }
-            return token1;
+           // return t;
         }
 
         private void richTextBox2_TextChanged(object sender, EventArgs e)
@@ -290,14 +312,18 @@ namespace WindowsFormsApp1
 
         private void button2_Click(object sender, EventArgs e)
         {
+            
             //state = states.IDINTIFIER;
             //string x = "{ Sample program in TINY language – computes factorial } read x;{ input an integer }if  0 < x   then     { don’t compute if x <= 0 }fact:= 1; repeat fact  := fact * x  x:= x - 1 until x = 0; write fact { output factorial of x }end";
             string str=null;
             
             while ( j!=after.Length) 
             {
-                str+=getToken(after) ; 
+                Token t1 = new Token();
+                getToken(after,t1) ;
+                if ((t1.Tokenvalue != null) && (t1.Tokentype != null)) { str += t1.Tokenvalue +"   " + t1.Tokentype; }
                 
+                //t1 = null;
             }
             richTextBox2.Text = str;
 

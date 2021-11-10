@@ -41,9 +41,9 @@ namespace WindowsFormsApp1
             this.button1.BackColor = System.Drawing.SystemColors.InactiveCaption;
             this.button1.Font = new System.Drawing.Font("Lucida Bright", 13.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.button1.ForeColor = System.Drawing.Color.Navy;
-            this.button1.Location = new System.Drawing.Point(12, 12);
+            this.button1.Location = new System.Drawing.Point(133, 12);
             this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(380, 42);
+            this.button1.Size = new System.Drawing.Size(396, 42);
             this.button1.TabIndex = 0;
             this.button1.Text = "Insert Tiny language code ";
             this.button1.UseVisualStyleBackColor = false;
@@ -53,9 +53,9 @@ namespace WindowsFormsApp1
             // 
             this.richTextBox1.BackColor = System.Drawing.SystemColors.ControlLight;
             this.richTextBox1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.richTextBox1.Location = new System.Drawing.Point(12, 60);
+            this.richTextBox1.Location = new System.Drawing.Point(51, 60);
             this.richTextBox1.Name = "richTextBox1";
-            this.richTextBox1.Size = new System.Drawing.Size(380, 584);
+            this.richTextBox1.Size = new System.Drawing.Size(539, 584);
             this.richTextBox1.TabIndex = 1;
             this.richTextBox1.Text = "";
             this.richTextBox1.TextChanged += new System.EventHandler(this.richTextBox1_TextChanged);
@@ -69,7 +69,7 @@ namespace WindowsFormsApp1
             this.button2.BackColor = System.Drawing.SystemColors.InactiveCaption;
             this.button2.Font = new System.Drawing.Font("Lucida Bright", 13.8F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.button2.ForeColor = System.Drawing.Color.Navy;
-            this.button2.Location = new System.Drawing.Point(660, 11);
+            this.button2.Location = new System.Drawing.Point(738, 11);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(394, 42);
             this.button2.TabIndex = 3;
@@ -83,7 +83,7 @@ namespace WindowsFormsApp1
             this.richTextBox2.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.richTextBox2.Location = new System.Drawing.Point(660, 60);
             this.richTextBox2.Name = "richTextBox2";
-            this.richTextBox2.Size = new System.Drawing.Size(394, 617);
+            this.richTextBox2.Size = new System.Drawing.Size(525, 617);
             this.richTextBox2.TabIndex = 4;
             this.richTextBox2.Text = "";
             this.richTextBox2.TextChanged += new System.EventHandler(this.richTextBox2_TextChanged);
