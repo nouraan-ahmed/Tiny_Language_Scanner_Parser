@@ -316,12 +316,21 @@ namespace WindowsFormsApp1
             //state = states.IDINTIFIER;
             //string x = "{ Sample program in TINY language – computes factorial } read x;{ input an integer }if  0 < x   then     { don’t compute if x <= 0 }fact:= 1; repeat fact  := fact * x  x:= x - 1 until x = 0; write fact { output factorial of x }end";
             string str=null;
-            
+            int counter = 0;
+            Token[] list = new Token[after.Length];
             while ( j!=after.Length) 
             {
                 Token t1 = new Token();
                 getToken(after,t1) ;
-                if ((t1.Tokenvalue != null) && (t1.Tokentype != null)) { str += t1.Tokenvalue +"   " + t1.Tokentype; }
+                
+
+                
+                if ((t1.Tokenvalue != null) && (t1.Tokentype != null)) 
+                {
+                    str += t1.Tokenvalue +"   " + t1.Tokentype;
+                    list[counter] = t1;
+                    counter++;
+                }
                 
                 //t1 = null;
             }
