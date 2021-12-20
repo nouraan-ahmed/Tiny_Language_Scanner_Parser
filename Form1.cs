@@ -273,24 +273,32 @@ namespace WindowsFormsApp1
                                 // token1 =
                                 //  token + " , reserved word \n";
                                 t.Tokenvalue = token;
-                                switch(token)
+                                switch(i)
                                 {
-                                    case "if":
+                                    case 0:
                                         t.Tokentype = ", IF \n";
-                                    case "then":
+                                        break;
+                                    case 1:
                                         t.Tokentype = ", THEN \n";
-                                    case "else":
+                                        break;
+                                    case 2:
                                         t.Tokentype = ", ELSE \n";
-                                    case "end":
+                                        break;
+                                    case 3:
                                         t.Tokentype = ", END \n";
-                                    case "repeat":
+                                        break;
+                                    case 4:
                                         t.Tokentype = ", REPEAT \n";
-                                    case "until":
-                                        t.Tokentype = ", UNTIL \n"; 
-                                    case "read":
+                                        break;
+                                    case 5:
+                                        t.Tokentype = ", UNTIL \n";
+                                        break;
+                                    case 6:
                                         t.Tokentype = ", READ \n";
-                                    case "write":
+                                        break;
+                                    case 7:
                                         t.Tokentype = ", WRITE \n";
+                                        break
                                     
 
                                 }
