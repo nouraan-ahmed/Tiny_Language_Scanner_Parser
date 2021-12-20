@@ -143,15 +143,63 @@ namespace WindowsFormsApp1
                                 {
                                     //token1 = ;
                                     t.Tokenvalue = input[j].ToString();
-                                    t.Tokentype = ", Symbol \n";
+                                    t.Tokentype = ", EQUAL \n";
 
                                 }
                             }
-                            else
+                            else if (input[j] == ';')
                             {
                                 //token1 = input[j] + " Symbol \n";
                                 t.Tokenvalue = input[j].ToString();
-                                t.Tokentype = ", Symbol \n";
+                                t.Tokentype = ", SEMICOLON \n";
+                            }
+                            else if (input[j] == '<')
+                            {
+                                //token1 = input[j] + " Symbol \n";
+                                t.Tokenvalue = input[j].ToString();
+                                t.Tokentype = ", LESSTHAN \n";
+                            }
+                            else if (input[j] == '>')
+                            {
+                                //token1 = input[j] + " Symbol \n";
+                                t.Tokenvalue = input[j].ToString();
+                                t.Tokentype = ", GREATERTHAN \n";
+                            }
+                            else if (input[j] == '+')
+                            {
+                                //token1 = input[j] + " Symbol \n";
+                                t.Tokenvalue = input[j].ToString();
+                                t.Tokentype = ", PLUS \n";
+                            }
+                            else if (input[j] == '-')
+                            {
+                                //token1 = input[j] + " Symbol \n";
+                                t.Tokenvalue = input[j].ToString();
+                                t.Tokentype = ", MINUS \n";
+                            }
+                            else if (input[j] == '*')
+                            {
+                                //token1 = input[j] + " Symbol \n";
+                                t.Tokenvalue = input[j].ToString();
+                                t.Tokentype = ", MULT \n";
+                            }
+                            else if (input[j] == '/')
+                            {
+                                //token1 = input[j] + " Symbol \n";
+                                t.Tokenvalue = input[j].ToString();
+                                t.Tokentype = ", DIV \n";
+                            }
+                            else if (input[j] == '(')
+                            {
+                                //token1 = input[j] + " Symbol \n";
+                                t.Tokenvalue = input[j].ToString();
+                                t.Tokentype = ", OPENBRACKET \n";
+                            }
+                            else if (input[j] == ')')
+                            {
+                                //token1 = input[j] + " Symbol \n";
+                                t.Tokenvalue = input[j].ToString();
+                                t.Tokentype = ", CLOSEDBRACKET \n";
                             }
 
                             /*if this symbol is the last one in the input string then go to state DONE,
@@ -193,7 +241,7 @@ namespace WindowsFormsApp1
                             state = states.DONE;
                             token = ":=";
                             t.Tokenvalue = token;
-                             t.Tokentype = ", Assign \n";
+                             t.Tokentype = ", ASSIGN \n";
                             //t.Tokentype = ", reserved word \n";
                         }
                         else
@@ -201,7 +249,7 @@ namespace WindowsFormsApp1
                             state = states.ERROR;
                         }
                         break;
-                    case states.IDINTIFIER:
+                    case states.IDNTIFIER:
 
                         {
 
@@ -225,7 +273,7 @@ namespace WindowsFormsApp1
                                 // token1 =
                                 //  token + " , reserved word \n";
                                 t.Tokenvalue = token;
-                                t.Tokentype=", reserved word \n";
+                                t.Tokentype=", "+ Reserve[i]+"\n";
                                 flag = true;
                                 break;
                             }
@@ -236,7 +284,7 @@ namespace WindowsFormsApp1
                             //token1 =
                             //token + " ,  identifier \n";
                             t.Tokenvalue = token;
-                            t.Tokentype = ",  identifier \n";
+                            t.Tokentype = ",  IDENTIFIER \n";
                         }
                         
                          state = states.DONE;
@@ -288,7 +336,7 @@ namespace WindowsFormsApp1
 
                         //label1.Text += mytoken += " , IS NUMBER \n";
                         // token1 = token + ;
-                        t.Tokentype = ", Number \n";
+                        t.Tokentype = ", NUMBER \n";
                             //token = "";
 
                         /* go to done state */
