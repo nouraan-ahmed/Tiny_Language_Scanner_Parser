@@ -273,8 +273,29 @@ namespace WindowsFormsApp1
                                 // token1 =
                                 //  token + " , reserved word \n";
                                 t.Tokenvalue = token;
-                                t.Tokentype=", "+ Reserve[i]+"\n";
-                                flag = true;
+                                switch(token)
+                                {
+                                    case "if":
+                                        t.Tokentype = ", IF \n";
+                                    case "then":
+                                        t.Tokentype = ", THEN \n";
+                                    case "else":
+                                        t.Tokentype = ", ELSE \n";
+                                    case "end":
+                                        t.Tokentype = ", END \n";
+                                    case "repeat":
+                                        t.Tokentype = ", REPEAT \n";
+                                    case "until":
+                                        t.Tokentype = ", UNTIL \n"; 
+                                    case "read":
+                                        t.Tokentype = ", READ \n";
+                                    case "write":
+                                        t.Tokentype = ", WRITE \n";
+                                    
+
+                                }
+                                    //t.Tokentype=", "+ Reserve[i]+"\n";
+                                    flag = true;
                                 break;
                             }
                             
