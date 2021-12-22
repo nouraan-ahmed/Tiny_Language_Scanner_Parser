@@ -10,6 +10,7 @@ namespace Tiny_Parser
     {
         public string Tokenvalue { get; set; }
         public string Tokentype { get; set; }
+        public Boolean isElsePart = false;
         public Token(string tokenVal, string tokenType)
         {
             Tokenvalue = tokenVal;
