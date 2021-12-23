@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Tiny_Parser
 {
-    class Token
+    public class Token
     {
         public string Tokenvalue { get; set; }
         public string Tokentype { get; set; }
