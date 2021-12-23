@@ -9,7 +9,13 @@ namespace Tiny_Parser
     {
         Stack<Token> stack = new Stack<Token>();
         Tree tree = new Tree();
-        Stack<Token> pushTokensToStack(List<Token> tokensList)
+        Scanner scanner = new Scanner();
+        string inputCode;
+        Parser(string input)
+        {
+            inputCode= input;
+        }
+        Stack<Token> pushTokensToStack(List<Token>tokensList)
         {
             for (int i = tokensList.Count; i > 0; i--)
             {
@@ -72,6 +78,23 @@ namespace Tiny_Parser
         public Boolean assign_stmt(Node parent)
         {
             Token value = new Token(null, "IDENTIFIER");
+        /* expected token is an input of value null, if its type matches the type of the token so 
+         * we fill its value with the value of the token */
+        public Boolean match (Token expectedToken)
+        {
+            Token currentToken=null;
+            scanner.getToken(inputCode, currentToken);
+            if (currentToken.Tokentype == expectedToken.Tokentype)
+            {
+                expectedToken.Tokenvalue=currentToken.Tokenvalue;
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+        
 
             Boolean result_matchTokenByStack = true;
             result_matchTokenByStack = matchTokenByStack(value);
