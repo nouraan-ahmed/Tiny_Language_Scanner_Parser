@@ -7,7 +7,7 @@ namespace Tiny_Parser
     internal class Parser
     {
         Stack<Token> stack = new Stack<Token>();
-        
+        Tree tree = new Tree();
         Stack<Token> pushTokensToStack(List<Token>tokensList)
         {
             for(int i= tokensList.Count; i>0;i--)
@@ -23,6 +23,14 @@ namespace Tiny_Parser
             s.getTokenList(inputCode,tokens);
             stack=pushTokensToStack(tokens);   
             return stack;
+        }
+        public void settree(Tree Tree)
+        {
+            tree = Tree;
+        }
+        public Tree gettree()
+        {
+            return tree;
         }
         public Boolean matchTokenByStack (Token expectedToken)
         {
