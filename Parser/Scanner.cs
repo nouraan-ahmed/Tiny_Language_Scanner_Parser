@@ -38,10 +38,10 @@ namespace Tiny_Parser
         }
         /* if the input is either space, tab, or new line, it is considered white space and this function returns true,
          * and returns false if not */
-        bool isSpace(char s) { return (s == ' ' || s == '\t' || s == '\n'); }
-        
+        bool isSpace(char s) { return (s == ' ' || s == '\t' || s == '\n' || s == '\r'); }
+
         /* function returns the next token in the string input */
-        void getToken(string input, Token t)
+        public void getToken(string input, Token t)
         {
             state = states.START;
 
