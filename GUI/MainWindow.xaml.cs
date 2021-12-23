@@ -46,8 +46,11 @@ namespace Tiny_Parser
 
             if (input_file.ShowDialog() == true)
             {
+                syntax_tree.Visibility = Visibility.Hidden;
+
                 //remove any text writen before in output textbox when browsing new file
                 output_text.Text = null;
+                input_text.Text = null;
 
                 //Get the path of specified file
                 var filePath = input_file.FileName;
@@ -63,7 +66,6 @@ namespace Tiny_Parser
 
                 else
                 {
-                    syntax_tree.Visibility = Visibility.Hidden;
                     isDrawn = false;
                     //get the directory name the file is in
                     sourceDirectory = System.IO.Path.GetDirectoryName(filePath);
@@ -82,13 +84,35 @@ namespace Tiny_Parser
                     }
                     scan.Visibility = Visibility.Visible;
                 }
+                //syntax_tree.Visibility = Visibility.Hidden;
             }
         }
 
         private void Scaner_Click(object sender, RoutedEventArgs e)
         {
             syntax_tree.Visibility = Visibility.Visible;
+            List<Token> tokens = new List<Token>();
+            Scanner1 s = new Scanner1();
+            s.getTokenList(input_text.Text, tokens);
 
+            //remove any text writen before in output textbox
+            string destFileName = System.IO.Path.Combine(sourceDirectory, inputFileName + "_Scanner_Output.txt");
+            output_text.Text = null;
+            StreamWriter sw = new StreamWriter(destFileName, false);
+            for(int i = 0; i < tokens.Count(); i++)
+            {
+                sw.WriteLine(tokens[i].Tokenvalue + ", " + tokens[i].Tokentype);
+            }
+            sw.Close();
+
+            using (StreamReader reader = new StreamReader(destFileName))
+            {
+                var fileContent = reader.ReadToEnd();
+                output_text.Text = fileContent;
+                reader.Close();
+            }
+
+            scan.Visibility = Visibility.Hidden;
         }
 
         private void Syntax_Tree_Click(object sender, RoutedEventArgs e)
