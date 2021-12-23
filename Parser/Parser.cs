@@ -54,14 +54,13 @@ namespace Tiny_Parser
             }
         }
         /* expected token is an input of value null, if its type matches the type of the token so 
-        * we fill its value with the value of the token */
+        * we fill its value with the value of the token (i.e. pass by address)*/
         public Boolean match(Token expectedToken)
         {
-            Token currentToken = null;
-            scanner.getToken(inputCode, currentToken);
-            if (currentToken.Tokentype == expectedToken.Tokentype)
+            if (g_token.Tokentype == expectedToken.Tokentype)
             {
-                expectedToken.Tokenvalue = currentToken.Tokenvalue;
+                expectedToken.Tokenvalue = g_token.Tokenvalue;
+                scanner.getToken(inputCode, g_token);
                 return true;
             }
             else
@@ -334,6 +333,44 @@ namespace Tiny_Parser
             }
             compare.setToken(value);
             return true;
+        }
+        //term → factor {mulop factor}
+        public Boolean term(Node parent)
+        {
+            //    currentToken = factor(currentToken);
+
+            Node temp = new Node();
+            Node newtemp = new Node();
+            //Token currentToken = new Token();
+
+            newtemp.setToken(g_token);
+
+            //What is the parent of factor?
+            factor(parent);
+            while (g_token.Tokentype == "MULOP")
+            {
+                temp = newtemp;
+                newtemp.setToken(g_token);
+                if (match()) //A match m3 eh ?
+                {
+                    tree.appendChild(temp, newtemp);
+                    temp = newtemp;
+                }
+                else
+                    return false;
+            }
+            return true;
+        }
+
+        public Boolean addop(Node parent)
+        {
+            if ((g_token.Tokentype == "PLUS") || (g_token.Tokentype == "MINUS"))
+            {
+                return true;
+            }
+            else
+                return false;
+
         }
 
     }
