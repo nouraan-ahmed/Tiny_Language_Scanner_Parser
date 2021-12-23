@@ -4,12 +4,12 @@ using System.Text;
 
 namespace Tiny_Parser
 {
-    public class Token
-    {
-        public string Tokenvalue;
-        public string Tokentype;
-    }
-    //enum states { START, COMMENT, NUM, IDINTIFIER, ERROR, ASSIGN, DONE };
+    //public class Token
+    //{
+    //    public string Tokenvalue;
+    //    public string Tokentype;
+    //}
+    ////enum states { START, COMMENT, NUM, IDINTIFIER, ERROR, ASSIGN, DONE };
     public class Scanner
     {
         public Token token;
@@ -19,7 +19,6 @@ namespace Tiny_Parser
         enum states { START, COMMENT, NUM, IDINTIFIER, ERROR, ASSIGN, DONE };
         states state = states.START;
         int j = 0;
-        string after;
         /******************** Function Definitions ****************/
 
         /* if the input is withen the range of digits (0 to 9) this function returns true,
@@ -337,7 +336,7 @@ namespace Tiny_Parser
         //int counter = 0;
         //Token[] list = new Token;
         /* function returns all the list of tokens in a Tiny language code*/
-        public void getTokenList(List<Token> tokens)
+        public void getTokenList(string after,List<Token> tokens)
         {
             while (j != after.Length)
             {
