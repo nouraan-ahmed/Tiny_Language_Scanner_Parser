@@ -24,5 +24,19 @@ namespace Tiny_Parser
             stack=pushTokensToStack(tokens);   
             return stack;
         }
+        public Boolean matchTokenByStack (Token expectedToken)
+        {
+            if (String.Equals(stack.Peek().Tokentype,expectedToken.Tokentype))
+            {
+                expectedToken.Tokenvalue = stack.Peek().Tokenvalue;
+                stack.Pop();
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
     }
 }
