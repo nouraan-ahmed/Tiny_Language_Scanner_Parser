@@ -43,6 +43,8 @@ namespace Tiny_Parser
         /* function returns the next token in the string input */
         public void getToken(string input, Token t)
         {
+            if (j >= input.Length)
+                return;
             state = states.START;
 
             // s Reserve;
