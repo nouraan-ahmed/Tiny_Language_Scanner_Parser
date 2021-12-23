@@ -184,6 +184,7 @@ namespace Tiny_Parser
                     return false;
                 }
                 compare.setToken(value1);
+                return true;
             }
             compare.setToken(value);
             return true;
