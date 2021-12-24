@@ -378,9 +378,7 @@ namespace Tiny_Parser
                 op.Tokenvalue = g_token.Tokenvalue;
                 op.Tokentype = g_token.Tokentype;
                 match(op);
-
-                Node op_node = new Node(op);
-                parent = op_node;
+                parent.setToken(op);
                 return true;
             }
             else
