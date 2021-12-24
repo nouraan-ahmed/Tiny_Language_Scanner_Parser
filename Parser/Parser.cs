@@ -153,7 +153,7 @@ namespace Tiny_Parser
             }
 
             Token value2 = new Token(null, "ELSE");
-            
+
             result_match = match(value2);
             //for GUI
             value2.isElsePart = result_match;
@@ -342,11 +342,11 @@ namespace Tiny_Parser
 
             /* now g_temp is the mulop if it exists */
 
-            Token MulOpToken = new Token("*", "MULOP");
+            Token MulOpToken = new Token();
 
-            while (g_token.Tokentype == "MULOP")
+            while ((g_token.Tokentype == "MULT")|| (g_token.Tokentype == "DIV"))
             {
-
+                MulOpToken.Tokentype = g_token.Tokentype;
                 if (firstMulOp)
                 {
                     Token lastTreeChildToken = new Token();
@@ -402,6 +402,55 @@ namespace Tiny_Parser
             }
             else
                 return false;
+        }
+        //term {addop term}
+        // simple-exp → simple-exp  addop  term | term
+        public Boolean simple_exp(Node parent)
+        {
+            Boolean firstAddOp = true;
+            Node temp = new Node();
+            Node newtemp = new Node();
+
+            /* first temp is the left child */
+            temp.setToken(g_token);
+
+            Boolean isTerm = term(parent);
+            if (!isTerm)
+            {
+                return false;
+            }
+
+            /* now g_temp is the addop if it exists */
+
+            Token AddOpToken = new Token();
+
+            while ((g_token.Tokentype == "PLUS")||(g_token.Tokentype == "MINUS"))
+            {
+                AddOpToken.Tokentype = g_token.Tokentype;
+                if (firstAddOp)
+                {
+                    Token lastTreeChildToken = new Token();
+                    lastTreeChildToken.Tokenvalue = parent.getChildren().Last().getToken().Tokenvalue;
+                    lastTreeChildToken.Tokentype = parent.getChildren().Last().getToken().Tokentype;
+                    /* Put the first factor in this node*/
+                    Node lastTreeChildNode = new Node(lastTreeChildToken);
+                    /* delete the first factor node form being the child of the root parent*/
+                    parent.getChildren().RemoveAt(parent.getChildrenCount() - 1);
+                    firstAddOp = false;
+                }
+                /* Make new temp as the new head AddOp*/
+                newtemp.setToken(g_token);
+                //match the expected token which is AddOp token to the g_token
+                if (match(AddOpToken))
+                {
+                    tree.appendChild(newtemp, temp);
+                    term(newtemp);
+                }
+                else
+                    return false;
+            }
+            return true;
+
         }
 
         public Boolean factor(Node parent)
