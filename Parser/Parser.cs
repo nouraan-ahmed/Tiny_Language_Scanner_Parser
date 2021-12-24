@@ -107,7 +107,7 @@ namespace Tiny_Parser
                 case "READ":
                     return read_stmt(parent);
 
-                case "ASSIGN":
+                case "IDENTIFIER":
                     return assign_stmt(parent);
 
                 case "REPEAT":
