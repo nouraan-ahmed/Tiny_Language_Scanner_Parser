@@ -76,56 +76,43 @@ namespace Tiny_Parser
 
         public Boolean stmt_sequence(Node parent)
         {
-            Boolean result_matchTokenByStack = statement(parent);
-            if (!result_matchTokenByStack)
+            Boolean result_match = statement(parent);
+            if (!result_match)
             {
                 return false;
             }
             Token value = new Token(null, "SEMICOLON");
 
-            Boolean result = matchTokenByStack(value);
+            Boolean result = match(value);
             if (result)
             {
                 result = statement(parent);
                 return result;
             }
 
-            return result_matchTokenByStack;
+            return result_match;
 
         }
 
         public Boolean statement(Node parent)
         {
-            Token value_if = new Token(null, "IF");
-            Token value_read = new Token(null, "READ");
-            Token value_assign = new Token(null, "ASSIGN");
-            Token value_repeat = new Token(null, "REPEAT");
-            Token value_write = new Token(null, "WRITE");
 
-            Boolean result_matchTokenByStack = matchTokenByStack(value_if);
-            if (result_matchTokenByStack)
+            switch (g_token.Tokentype)
             {
-                if_stmt(parent);
-            }
-            result_matchTokenByStack = matchTokenByStack(value_read);
-            if (result_matchTokenByStack)
-            {
-                read_stmt(parent);
-            }
-            result_matchTokenByStack = matchTokenByStack(value_assign);
-            if (result_matchTokenByStack)
-            {
-                assign_stmt(parent);
-            }
-            result_matchTokenByStack = matchTokenByStack(value_repeat);
-            if (result_matchTokenByStack)
-            {
-                repeat_stmt(parent);
-            }
-            result_matchTokenByStack = matchTokenByStack(value_write);
-            if (result_matchTokenByStack)
-            {
-                write_stmt(parent);
+                case "IF":
+                    return if_stmt(parent);
+
+                case "READ":
+                    return read_stmt(parent);
+
+                case "ASSIGN":
+                    return assign_stmt(parent);
+
+                case "REPEAT":
+                    return repeat_stmt(parent);
+
+                case "WRITE":
+                    return write_stmt(parent);
             }
             return false;
         }
@@ -133,49 +120,49 @@ namespace Tiny_Parser
         public Boolean if_stmt(Node parent)
         {
             Token value = new Token(null, "IF");
-            Boolean result_matchTokenByStack = true;
-            result_matchTokenByStack = matchTokenByStack(value);
+            Boolean result_match = true;
+            result_match = match(value);
 
-            if (!result_matchTokenByStack)
+            if (!result_match)
             {
                 return false;
             }
 
             Node if_v = new Node(value);
-            result_matchTokenByStack = exp(if_v);
+            result_match = exp(if_v);
 
-            if (!result_matchTokenByStack)
+            if (!result_match)
             {
                 return false;
             }
 
             Token value1 = new Token(null, "THEN");
-            result_matchTokenByStack = matchTokenByStack(value1);
+            result_match = match(value1);
 
-            if (!result_matchTokenByStack)
+            if (!result_match)
             {
                 return false;
             }
 
-            result_matchTokenByStack = stmt_sequence(if_v);
+            result_match = stmt_sequence(if_v);
 
-            if (!result_matchTokenByStack)
+            if (!result_match)
             {
                 return false;
             }
 
             Token value2 = new Token(null, "ELSE");
-            result_matchTokenByStack = matchTokenByStack(value2);
+            result_match = match(value2);
 
-            if (result_matchTokenByStack)
+            if (result_match)
             {
-                result_matchTokenByStack = stmt_sequence(if_v);
+                result_match = stmt_sequence(if_v);
             }
 
             Token value3 = new Token(null, "END");
-            result_matchTokenByStack = matchTokenByStack(value3);
+            result_match = match(value3);
 
-            if (!result_matchTokenByStack)
+            if (!result_match)
             {
                 return false;
             }
@@ -187,22 +174,22 @@ namespace Tiny_Parser
         {
             Token value = new Token(null, "REPEAT");
 
-            Boolean result_matchTokenByStack = true;
-            result_matchTokenByStack = matchTokenByStack(value);
-            if (!result_matchTokenByStack)
+            Boolean result_match = true;
+            result_match = match(value);
+            if (!result_match)
             {
                 return false;
             }
             Node repeat = new Node(value);
-            result_matchTokenByStack = stmt_sequence(repeat);
-            if (!result_matchTokenByStack)
+            result_match = stmt_sequence(repeat);
+            if (!result_match)
             {
                 return false;
             }
             Token value1 = new Token(null, "UNTIL");
 
-            result_matchTokenByStack = matchTokenByStack(value1);
-            if (!result_matchTokenByStack)
+            result_match = match(value1);
+            if (!result_match)
             {
                 return false;
             }
@@ -399,7 +386,7 @@ namespace Tiny_Parser
                     Token t = new Token("(", "OPENBRACKET");
                     if (match(t))
                     {
-                        if(exp(parent))
+                        if (exp(parent))
                         {
                             t.Tokenvalue = ")";
                             t.Tokentype = "CLOSEDBRACKET";
@@ -423,7 +410,7 @@ namespace Tiny_Parser
 
                 case "IDENTIFIER":
                     Token t2 = new Token(null, "IDENTIFIER");
-                    if(match(t2))
+                    if (match(t2))
                     {
                         Node fact_node2 = new Node(fact);
                         tree.appendChild(parent, fact_node2);
