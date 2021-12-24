@@ -136,7 +136,7 @@ namespace Tiny_Parser
             {
                 return false;
             }
-
+            tree.appendChild(parent, if_v);
             Token value1 = new Token(null, "THEN");
             result_match = match(value1);
 
@@ -160,7 +160,9 @@ namespace Tiny_Parser
 
             if (result_match)
             {
-                result_match = stmt_sequence(if_v);
+                Node else_v = new Node(value2);
+                result_match = stmt_sequence(else_v);
+                tree.appendChild(if_v, else_v);
             }
 
             Token value3 = new Token(null, "END");
@@ -170,7 +172,6 @@ namespace Tiny_Parser
             {
                 return false;
             }
-            tree.appendChild(parent, if_v);
             return true;
         }
 
