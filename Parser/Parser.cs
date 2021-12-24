@@ -344,7 +344,7 @@ namespace Tiny_Parser
 
             Token MulOpToken = new Token();
 
-            while ((g_token.Tokentype == "MULT")|| (g_token.Tokentype == "DIV"))
+            while ((g_token.Tokentype == "MULT") || (g_token.Tokentype == "DIV"))
             {
                 MulOpToken.Tokentype = g_token.Tokentype;
                 if (firstMulOp)
@@ -424,7 +424,7 @@ namespace Tiny_Parser
 
             Token AddOpToken = new Token();
 
-            while ((g_token.Tokentype == "PLUS")||(g_token.Tokentype == "MINUS"))
+            while ((g_token.Tokentype == "PLUS") || (g_token.Tokentype == "MINUS"))
             {
                 AddOpToken.Tokentype = g_token.Tokentype;
                 if (firstAddOp)
