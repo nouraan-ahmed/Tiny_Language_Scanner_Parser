@@ -332,7 +332,10 @@ namespace Tiny_Parser
             Node newtemp = new Node();
 
             /* first temp is the left child */
-            temp.setToken(g_token);
+            Token old_g_token = new Token();
+            old_g_token.Tokentype = g_token.Tokentype;
+            old_g_token.Tokenvalue = g_token.Tokenvalue;
+            temp.setToken(old_g_token);
 
             Boolean isFactor = factor(parent);
             if (!isFactor)
@@ -343,9 +346,12 @@ namespace Tiny_Parser
             /* now g_temp is the mulop if it exists */
 
             Token MulOpToken = new Token();
-
+            Node Mulop_Node = new Node(MulOpToken);
             while ((g_token.Tokentype == "MULT") || (g_token.Tokentype == "DIV"))
             {
+                /* Make new temp as the new head MulOp*/
+                newtemp.setToken(g_token);
+
                 MulOpToken.Tokentype = g_token.Tokentype;
                 if (firstMulOp)
                 {
@@ -357,11 +363,10 @@ namespace Tiny_Parser
                     /* delete the first factor node form being the child of the root parent*/
                     parent.getChildren().RemoveAt(parent.getChildrenCount() - 1);
                     firstMulOp = false;
+                    tree.appendChild(parent, newtemp);
                 }
-                /* Make new temp as the new head MulOp*/
-                newtemp.setToken(g_token);
                 //match the expected token which is MulOp token to the g_token
-                if (mulop(MulOpToken))
+                if (mulop(Mulop_Node))
                 {
                     tree.appendChild(newtemp, temp);
                     factor(newtemp);
@@ -412,7 +417,10 @@ namespace Tiny_Parser
             Node newtemp = new Node();
 
             /* first temp is the left child */
-            temp.setToken(g_token);
+            Token old_g_token = new Token();
+            old_g_token.Tokentype = g_token.Tokentype;
+            old_g_token.Tokenvalue = g_token.Tokenvalue;
+            temp.setToken(old_g_token);
 
             Boolean isTerm = term(parent);
             if (!isTerm)
@@ -423,9 +431,13 @@ namespace Tiny_Parser
             /* now g_temp is the addop if it exists */
 
             Token AddOpToken = new Token();
+            Node Addop_Node = new Node(AddOpToken);
 
             while ((g_token.Tokentype == "PLUS") || (g_token.Tokentype == "MINUS"))
             {
+                /* Make new temp as the new head AddOp*/
+                newtemp.setToken(g_token);
+
                 AddOpToken.Tokentype = g_token.Tokentype;
                 if (firstAddOp)
                 {
@@ -437,11 +449,10 @@ namespace Tiny_Parser
                     /* delete the first factor node form being the child of the root parent*/
                     parent.getChildren().RemoveAt(parent.getChildrenCount() - 1);
                     firstAddOp = false;
+                    tree.appendChild(parent, newtemp);
                 }
-                /* Make new temp as the new head AddOp*/
-                newtemp.setToken(g_token);
                 //match the expected token which is AddOp token to the g_token
-                if (addop(AddOpToken))
+                if (addop(Addop_Node))
                 {
                     tree.appendChild(newtemp, temp);
                     term(newtemp);
