@@ -71,6 +71,7 @@ namespace Tiny_Parser
 
         public Boolean program(Node parent)
         {
+            scanner.getToken(inputCode, g_token);
             return stmt_sequence(parent);
         }
 
@@ -152,11 +153,15 @@ namespace Tiny_Parser
             }
 
             Token value2 = new Token(null, "ELSE");
+            
             result_match = match(value2);
+            //for GUI
+            value2.isElsePart = result_match;
 
             if (result_match)
             {
                 result_match = stmt_sequence(if_v);
+                value2.isElsePart = false;
             }
 
             Token value3 = new Token(null, "END");
