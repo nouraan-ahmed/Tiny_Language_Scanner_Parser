@@ -161,7 +161,6 @@ namespace Tiny_Parser
             if (result_match)
             {
                 result_match = stmt_sequence(if_v);
-                value2.isElsePart = false;
             }
 
             Token value3 = new Token(null, "END");
