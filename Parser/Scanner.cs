@@ -191,6 +191,7 @@ namespace Tiny_Parser
                     case states.ASSIGN:
                         if (input[j] == '=')
                         {
+                            j++;
                             state = states.DONE;
                             token = ":=";
                             t.Tokenvalue = token;
