@@ -361,7 +361,7 @@ namespace Tiny_Parser
                 /* Make new temp as the new head MulOp*/
                 newtemp.setToken(g_token);
                 //match the expected token which is MulOp token to the g_token
-                if (match(MulOpToken))
+                if (mulop(MulOpToken))
                 {
                     tree.appendChild(newtemp, temp);
                     factor(newtemp);
@@ -441,7 +441,7 @@ namespace Tiny_Parser
                 /* Make new temp as the new head AddOp*/
                 newtemp.setToken(g_token);
                 //match the expected token which is AddOp token to the g_token
-                if (match(AddOpToken))
+                if (addop(AddOpToken))
                 {
                     tree.appendChild(newtemp, temp);
                     term(newtemp);
