@@ -205,6 +205,29 @@ namespace Tiny_Parser
             return result;
 
         }
+        public Boolean read_stmt(Node parent)
+        {
+            Token value = new Token(null, "READ");
+
+            Boolean result_match = true;
+            result_match = match(value);
+            if (!result_match)
+            {
+                return false;
+            }
+            Node ifbody_read = new Node(value);
+            Token value1 = new Token(null, "IDENTIFIER");
+            result_match = match(value1);
+            if (!result_match)
+            {
+                return false;
+            }
+            Node readid = new Node(value1);
+            tree.appendChild(parent, ifbody_read);
+            tree.appendChild(ifbody_read, readid);
+            return true;
+
+        }
         public Boolean assign_stmt(Node parent)
         {
             Token value = new Token(null, "IDENTIFIER");
