@@ -40,7 +40,7 @@ namespace Tiny_Parser
         }
         static public void printNode(Node parent, Node child, int depth)
         {
-            Console.WriteLine("Parent is " + parent.getToken().Tokenvalue + "Child is " + child.getToken().Tokenvalue);
+            Console.WriteLine("Parent is " + parent.getToken().Tokenvalue + " .. Child is " + child.getToken().Tokenvalue);
         }
 
     }

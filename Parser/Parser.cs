@@ -11,7 +11,7 @@ namespace Tiny_Parser
         Tree tree = new Tree();
         Scanner scanner = new Scanner();
         string inputCode;
-        Token g_token;
+        Token g_token = new Token();
         public Parser(string input, Tree tree)
         {
             inputCode = input;
