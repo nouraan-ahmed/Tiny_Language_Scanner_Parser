@@ -205,43 +205,20 @@ namespace Tiny_Parser
             return result;
 
         }
-        public Boolean read_stmt(Node parent)
-        {
-            Token value = new Token(null, "READ");
-
-            Boolean result_matchTokenByStack = true;
-            result_matchTokenByStack = matchTokenByStack(value);
-            if (!result_matchTokenByStack)
-            {
-                return false;
-            }
-            Node ifbody_read = new Node(value);
-            Token value1 = new Token(null, "IDENTIFIER");
-            result_matchTokenByStack = matchTokenByStack(value1);
-            if (!result_matchTokenByStack)
-            {
-                return false;
-            }
-            Node readid = new Node(value1);
-            tree.appendChild(parent, ifbody_read);
-            tree.appendChild(ifbody_read, readid);
-            return true;
-
-        }
         public Boolean assign_stmt(Node parent)
         {
             Token value = new Token(null, "IDENTIFIER");
 
-            Boolean result_matchTokenByStack = true;
-            result_matchTokenByStack = matchTokenByStack(value);
-            if (!result_matchTokenByStack)
+            Boolean result_match = true;
+            result_match = match(value);
+            if (!result_match)
             {
                 return false;
             }
             Node identifier = new Node(value);
             Token value1 = new Token(null, "ASSIGN");
-            result_matchTokenByStack = matchTokenByStack(value1);
-            if (!result_matchTokenByStack)
+            result_match = match(value1);
+            if (!result_match)
             {
                 return false;
             }
@@ -256,9 +233,9 @@ namespace Tiny_Parser
         {
             Token value = new Token(null, "WRITE");
 
-            Boolean result_matchTokenByStack = true;
-            result_matchTokenByStack = matchTokenByStack(value);
-            if (!result_matchTokenByStack)
+            Boolean result_match = true;
+            result_match = match(value);
+            if (!result_match)
             {
                 return false;
             }
@@ -277,7 +254,7 @@ namespace Tiny_Parser
                 return false;
             }
 
-            if (stack.Peek().Tokenvalue == "=" || stack.Peek().Tokenvalue == "<")
+            if (g_token.Tokenvalue == "=" || g_token.Tokenvalue == "<")
             {
                 Token t = new Token();
                 t.Tokenvalue = parent.getChildren().Last().getToken().Tokenvalue;
@@ -306,15 +283,15 @@ namespace Tiny_Parser
         public Boolean comparison_op(Node compare)
         {
             Token value = new Token(null, "EQUAL");
-            Boolean result_matchTokenByStack = true;
+            Boolean result_match = true;
 
-            result_matchTokenByStack = matchTokenByStack(value);
+            result_match = match(value);
 
-            if (!result_matchTokenByStack)
+            if (!result_match)
             {
                 Token value1 = new Token(null, "LESSTHAN");
-                result_matchTokenByStack = matchTokenByStack(value1);
-                if (!result_matchTokenByStack)
+                result_match = match(value1);
+                if (!result_match)
                 {
                     return false;
                 }
