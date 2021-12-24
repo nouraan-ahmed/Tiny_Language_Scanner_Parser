@@ -292,15 +292,14 @@ namespace Tiny_Parser
                     return false;
 
                 }
-
+                parent.getChildren().RemoveAt(parent.getChildrenCount() - 1);
+                tree.appendChild(parent, compare);
+                tree.appendChild(compare, n);
                 result = simple_exp(compare);
                 if (!result)
                 {
                     return false;
                 }
-                parent.getChildren().RemoveAt(parent.getChildrenCount() - 1);
-                tree.appendChild(parent, compare);
-                tree.appendChild(compare, n);
             }
             return true;
         }
