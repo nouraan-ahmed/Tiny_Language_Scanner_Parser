@@ -304,35 +304,62 @@ namespace Tiny_Parser
         //term → factor {mulop factor}
         public Boolean term(Node parent)
         {
-            //    currentToken = factor(currentToken);
-
+            Boolean firstMulOp = true;
             Node temp = new Node();
             Node newtemp = new Node();
-            //Token currentToken = new Token();
 
-            newtemp.setToken(g_token);
+            /* first temp is the left child */
+            temp.setToken(g_token);
 
-            //What is the parent of factor?
-            factor(parent);
+            Boolean isFactor = factor(parent);
+            if (!isFactor)
+            {
+                return false;
+            }
+
+            /* now g_temp is the mulop if it exists */
+
+            Token MulOpToken = new Token("*", "MULOP");
+
             while (g_token.Tokentype == "MULOP")
             {
-                temp = newtemp;
-                newtemp.setToken(g_token);
-                if (match()) //A match m3 eh ?
+
+                if (firstMulOp)
                 {
-                    tree.appendChild(temp, newtemp);
-                    temp = newtemp;
+                    Token lastTreeChildToken = new Token();
+                    lastTreeChildToken.Tokenvalue = parent.getChildren().Last().getToken().Tokenvalue;
+                    lastTreeChildToken.Tokentype = parent.getChildren().Last().getToken().Tokentype;
+                    /* Put the first factor in this node*/
+                    Node lastTreeChildNode = new Node(lastTreeChildToken);
+                    /* delete the first factor node form being the child of the root parent*/
+                    parent.getChildren().RemoveAt(parent.getChildrenCount() - 1);
+                    firstMulOp = false;
+                }
+                /* Make new temp as the new head MulOp*/
+                newtemp.setToken(g_token);
+                //match the expected token which is MulOp token to the g_token
+                if (match(MulOpToken))
+                {
+                    tree.appendChild(newtemp, temp);
+                    factor(newtemp);
                 }
                 else
                     return false;
             }
             return true;
         }
-
         public Boolean addop(Node parent)
         {
             if ((g_token.Tokentype == "PLUS") || (g_token.Tokentype == "MINUS"))
             {
+                Token op = new Token();
+                op.Tokenvalue = null;
+                op.Tokentype = g_token.Tokentype;
+                match(op);
+
+                Node op_node = new Node(op);
+                parent = op_node;
+
                 return true;
             }
             else
