@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Tiny_Parser
 {
-    class Node
+    public class Node
     {
         private Token token;
         private List<Node> children = new List<Node>();
@@ -59,7 +59,7 @@ namespace Tiny_Parser
         }
 
     }
-    class Tree
+    public class Tree
     {
         private Node root;
         public Tree(Node root)

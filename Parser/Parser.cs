@@ -5,16 +5,17 @@ using System.Text;
 
 namespace Tiny_Parser
 {
-    internal class Parser
+    public class Parser
     {
         Stack<Token> stack = new Stack<Token>();
         Tree tree = new Tree();
         Scanner scanner = new Scanner();
         string inputCode;
         Token g_token;
-        Parser(string input)
+        public Parser(string input, Tree tree)
         {
             inputCode = input;
+            this.tree = tree;
         }
         Stack<Token> pushTokensToStack(List<Token> tokensList)
         {
