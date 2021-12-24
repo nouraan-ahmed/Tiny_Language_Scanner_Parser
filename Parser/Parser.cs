@@ -308,8 +308,6 @@ namespace Tiny_Parser
                 parent.getChildren().RemoveAt(parent.getChildrenCount() - 1);
                 tree.appendChild(parent, compare);
                 tree.appendChild(compare, n);
-
-
             }
             return true;
         }
@@ -370,7 +368,70 @@ namespace Tiny_Parser
             }
             else
                 return false;
+        }
 
+        public Boolean mulop(Node parent)
+        {
+            if ((g_token.Tokentype == "MULT") || (g_token.Tokentype == "DIV"))
+            {
+                Token op = new Token();
+                op.Tokenvalue = g_token.Tokenvalue;
+                op.Tokentype = g_token.Tokentype;
+                match(op);
+
+                Node op_node = new Node(op);
+                parent = op_node;
+                return true;
+            }
+            else
+                return false;
+        }
+
+        public Boolean factor(Node parent)
+        {
+            Token fact = new Token();
+            fact.Tokenvalue = g_token.Tokenvalue;
+            fact.Tokentype = g_token.Tokentype;
+
+            switch (g_token.Tokentype)
+            {
+                case "OPENBRACKET":
+                    Token t = new Token("(", "OPENBRACKET");
+                    if (match(t))
+                    {
+                        if(exp(parent))
+                        {
+                            t.Tokenvalue = ")";
+                            t.Tokentype = "CLOSEDBRACKET";
+                            if (match(t))
+                            {
+                                return true;
+                            }
+                        }
+                    }
+                    break;
+
+                case "NUMBER":
+                    Token t1 = new Token(null, "NUMBER");
+                    if (match(t1))
+                    {
+                        Node fact_node1 = new Node(fact);
+                        tree.appendChild(parent, fact_node1);
+                        return true;
+                    }
+                    break;
+
+                case "IDENTIFIER":
+                    Token t2 = new Token(null, "IDENTIFIER");
+                    if(match(t2))
+                    {
+                        Node fact_node2 = new Node(fact);
+                        tree.appendChild(parent, fact_node2);
+                        return true;
+                    }
+                    break;
+            }
+            return false;
         }
 
     }
