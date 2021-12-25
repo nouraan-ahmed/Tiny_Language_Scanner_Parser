@@ -13,15 +13,13 @@ namespace Tiny_Parser
 {
     class DrawSyntaxTree
     {
-        //int left_margin = 20;
         int top_margin = 70;
-        //int line_length = 15;
         Canvas MyCanvas;
 
         int child_left_margin = 0;
         int last_left_margin = 0;
         int last_top_margin = 0;
-        Boolean isChild = true;
+        int else_part_lastNo = 0;
 
         public DrawSyntaxTree(Canvas c)
         {
@@ -60,11 +58,11 @@ namespace Tiny_Parser
                 switch(child.getChildNo())
                 {
                     case 0:
-                        child_left_margin = (depth != 0) ? parent.getLeftMargin() - 50 : parent.getLeftMargin();
+                        child_left_margin =  parent.getLeftMargin();
                         break;
 
                     case 1:
-                        child_left_margin = (depth != 0) ? parent.getLeftMargin() + 50 : parent.getLeftMargin() + 100;
+                        child_left_margin =  last_left_margin + 100;
                         break;
                 }
             }
@@ -74,22 +72,22 @@ namespace Tiny_Parser
                 switch (child.getChildNo())
                 {
                     case 0:
-                        child_left_margin = (depth == 0) ? parent.getLeftMargin() - 80: parent.getLeftMargin();
+                        child_left_margin =  parent.getLeftMargin();
                         break;
 
                     case 1:
-                        child_left_margin = (depth == 0) ? parent.getLeftMargin() : parent.getLeftMargin() + 200;
+                        child_left_margin =  last_left_margin + 100;
                         break;
 
                     case 2:
-                        child_left_margin = (depth == 0) ? parent.getLeftMargin() + 80 : parent.getLeftMargin() + 400;
+                        child_left_margin =  last_left_margin + 200;
                         break;
                 }
             }
 
             else if (child.getChildNo() == 0 || (parent.getToken().Tokentype == "ASSIGN" && child.getChildNo() == 1))
             {
-                child_left_margin = last_left_margin;
+                child_left_margin = parent.getLeftMargin();
             }
 
             else
@@ -151,6 +149,9 @@ namespace Tiny_Parser
 
             else if ((parent.getToken().Tokentype != "ASSIGN" || (parent.getToken().Tokentype == "ASSIGN" && child.getChildNo() > 0)) && parent.getToken().Tokentype != "READ")
             {
+                if (child.getToken().Tokentype == "IF") 
+                    else_part_lastNo = 0;
+
                 // Create rectangle.
                 Border rectangle = new Border
                 {
@@ -189,7 +190,11 @@ namespace Tiny_Parser
 
                 rectangle.Child = rect_content;
 
-                if((depth == 0 && child.getChildNo() > 0) || (parent.getToken().Tokentype == "IF" && !child.getToken().isElsePart && child.getChildNo() > 1) || (parent.getToken().Tokentype == "REPEAT" && child.getChildNo() > 0))
+                //draw horizontal line with the prev block in these cases
+                //1. all children of the root
+                //2. the body of the if statement after the first stmt but not the first else stmt
+                //3. the body of repeat after the first stmt and without the last child as it is the until part
+                if ((depth == 0 && child.getChildNo() > 0) || (parent.getToken().Tokentype == "IF" && !child.getToken().isElsePart && child.getChildNo() > 1) || (parent.getToken().Tokentype == "IF" && child.getToken().isElsePart && child.getChildNo() > 1 && else_part_lastNo == 1) || (parent.getToken().Tokentype == "REPEAT" && child.getChildNo() > 0 && child.getChildNo() != parent.getChildren().Last().getChildNo()))
                 {
                     horizontal_line.X2 = rectangle.Margin.Left;
                     horizontal_line.Y2 = (rectangle.Height / 2) + rectangle.Margin.Top;
@@ -200,6 +205,8 @@ namespace Tiny_Parser
 
                 else
                 {
+                    if (child.getToken().isElsePart == true) else_part_lastNo = 1;
+
                     line.X2 = (rectangle.Width / 2) + rectangle.Margin.Left;
                     line.Y2 = rectangle.Margin.Top;
 
@@ -218,7 +225,7 @@ namespace Tiny_Parser
             MyCanvas.Children.Add(horizontal_line);
 
             MyCanvas.Width = last_left_margin + 80 + 30;
-            MyCanvas.Height = last_top_margin + 50 + 30;
+            MyCanvas.Height = (MyCanvas.Height < last_top_margin)? last_top_margin + 50 + 10 : MyCanvas.Height;
         }
 
 

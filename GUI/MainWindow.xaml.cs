@@ -22,7 +22,6 @@ namespace Tiny_Parser
         int page_number = 0;
         string sourceDirectory = null;
         string inputFileName = null;
-        string outputFile = null;
         Boolean isDrawn = false;
 
         public MainWindow()
@@ -31,6 +30,19 @@ namespace Tiny_Parser
             //hide buttons
             Hide_Page1();
             Hide_Page2();
+
+            //Token t1 = new Token();
+            //t1.Tokentype = "bb";
+            //t1.Tokenvalue = "cc";
+
+            //Token t2 = new Token();
+            //t2 = t1;
+            //t2.Tokentype = "aa";
+            //List<Token> tt = new List<Token>();
+            //tt.Add(t1);
+            //tt.Add(t2);
+
+            //tt.Remove(t2);
         }
 
         private void Browse_Click(object sender, RoutedEventArgs e)
@@ -92,7 +104,7 @@ namespace Tiny_Parser
         {
             syntax_tree.Visibility = Visibility.Visible;
             List<Token> tokens = new List<Token>();
-            Scanner1 s = new Scanner1();
+            Scanner s = new Scanner();
             s.getTokenList(input_text.Text, tokens);
 
             //remove any text writen before in output textbox
@@ -117,13 +129,14 @@ namespace Tiny_Parser
 
         private void Syntax_Tree_Click(object sender, RoutedEventArgs e)
         {
+            syntax_tree_canvas.Children.Clear();
             isDrawn = true;
             page_number = 2;
             Hide_Page1();
             Show_Page2();
 
             Tree tree = new Tree();
-            Token token1 = new Token("read", "READ");
+            /*Token token1 = new Token("read", "READ");
             Token token2 = new Token("X", "IDENTIFIER");
             Node root = tree.getTreeRoot();
             Node n1 = new Node(token1);
@@ -208,10 +221,12 @@ namespace Tiny_Parser
             Node n24 = new Node(token24);
             Node n25 = new Node(token25);
             tree.appendChild(n3, n24);
-            tree.appendChild(n24, n25);
+            tree.appendChild(n24, n25);*/
+            Parser parse = new Parser(input_text.Text, tree);
+            parse.program(tree.getTreeRoot());
 
-            DrawSyntaxTree d = new DrawSyntaxTree(syntax_tree_canvas);
-            tree.traverseTree(d.Draw_Child_Node);
+            DrawSyntaxTree draw = new DrawSyntaxTree(syntax_tree_canvas);
+            tree.traverseTree(draw.Draw_Child_Node);
 
         }
 
