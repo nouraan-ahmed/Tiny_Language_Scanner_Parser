@@ -85,14 +85,21 @@ namespace Tiny_Parser
             }
             Token value = new Token(null, "SEMICOLON");
 
-            Boolean result = match(value);
-            if (result)
+            while (g_token.Tokentype == "SEMICOLON")
             {
-                result = statement(parent);
-                return result;
+                result_match = match(value);
+
+                if (!result_match)
+                {
+                    return false;
+                }
+                if (result_match)
+                {
+                    result_match = statement(parent);
+                }
             }
 
-            return result_match;
+            return true;
 
         }
 
@@ -155,23 +162,31 @@ namespace Tiny_Parser
 
             Token value2 = new Token(null, "ELSE");
 
-            result_match = match(value2);
-            //for GUI
-            value2.isElsePart = result_match;
+            if (g_token.Tokentype == "ELSE") { 
 
-            if (result_match)
-            {
+                result_match = match(value2);
+                //for GUI
+                value2.isElsePart = true;
+
                 Node else_v = new Node(value2);
                 result_match = stmt_sequence(else_v);
+                if (!result_match)
+                    {
+                        return false;
+                    }
                 tree.appendChild(if_v, else_v);
+
             }
 
             Token value3 = new Token(null, "END");
-            result_match = match(value3);
-
-            if (!result_match)
+            if (g_token.Tokentype == "END")
             {
-                return false;
+                result_match = match(value3);
+
+                if (!result_match)
+                {
+                    return false;
+                }
             }
             return true;
         }
@@ -346,7 +361,7 @@ namespace Tiny_Parser
             Token MulOpToken = new Token();
             Node Mulop_Node = new Node(MulOpToken);
             Token new_g_token = new Token();
-
+            
 
             while ((g_token.Tokentype == "MULT") || (g_token.Tokentype == "DIV"))
             {
@@ -375,7 +390,7 @@ namespace Tiny_Parser
                     tree.appendChild(newtemp, temp);
                     factor(newtemp);
                 }
-
+                
                 else
                     return false;
             }
@@ -444,10 +459,10 @@ namespace Tiny_Parser
             {
                 /* Make new temp as the new head AddOp*/
                 //newtemp.setToken(g_token);
-                new_g_token.Tokentype = g_token.Tokentype;
-                new_g_token.Tokenvalue = g_token.Tokenvalue;
+                new_g_token.Tokentype=g_token.Tokentype;
+                new_g_token.Tokenvalue=g_token.Tokenvalue;
                 newtemp.setToken(new_g_token);
-
+                
                 AddOpToken.Tokentype = g_token.Tokentype;
                 if (firstAddOp)
                 {
