@@ -164,17 +164,15 @@ namespace Tiny_Parser
 
             if (g_token.Tokentype == "ELSE") { 
 
-                result_match = match(value2);
+                match(value2);
                 //for GUI
-                value2.isElsePart = true;
+                g_token.isElsePart = true;
 
-                Node else_v = new Node(value2);
-                result_match = stmt_sequence(else_v);
+                result_match = stmt_sequence(if_v);
                 if (!result_match)
                     {
                         return false;
                     }
-                tree.appendChild(if_v, else_v);
 
             }
 
