@@ -61,6 +61,7 @@ namespace Tiny_Parser
             if (g_token.Tokentype == expectedToken.Tokentype)
             {
                 expectedToken.Tokenvalue = g_token.Tokenvalue;
+                expectedToken.isElsePart = g_token.isElsePart;
                 scanner.getToken(inputCode, g_token);
                 return true;
             }
@@ -131,6 +132,7 @@ namespace Tiny_Parser
             Token value = new Token(null, "IF");
             Boolean result_match = true;
             result_match = match(value);
+            Boolean first_stmt_else = true;
 
             if (!result_match)
             {
@@ -162,17 +164,18 @@ namespace Tiny_Parser
 
             Token value2 = new Token(null, "ELSE");
 
-            if (g_token.Tokentype == "ELSE") { 
+            if (g_token.Tokentype == "ELSE") {
 
                 match(value2);
                 //for GUI
-                g_token.isElsePart = true;
-
+                g_token.isElsePart = first_stmt_else;
+                first_stmt_else = false;
                 result_match = stmt_sequence(if_v);
+                g_token.isElsePart = first_stmt_else;
                 if (!result_match)
-                    {
-                        return false;
-                    }
+                {
+                    return false;
+                }
 
             }
 
