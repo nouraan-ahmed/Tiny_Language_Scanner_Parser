@@ -347,10 +347,16 @@ namespace Tiny_Parser
 
             Token MulOpToken = new Token();
             Node Mulop_Node = new Node(MulOpToken);
+            Token new_g_token = new Token();
+            
+
             while ((g_token.Tokentype == "MULT") || (g_token.Tokentype == "DIV"))
             {
                 /* Make new temp as the new head MulOp*/
-                newtemp.setToken(g_token);
+                //newtemp.setToken(g_token);
+                new_g_token.Tokentype = g_token.Tokentype;
+                new_g_token.Tokenvalue = g_token.Tokenvalue;
+                newtemp.setToken(new_g_token);
 
                 MulOpToken.Tokentype = g_token.Tokentype;
                 if (firstMulOp)
@@ -371,9 +377,11 @@ namespace Tiny_Parser
                     tree.appendChild(newtemp, temp);
                     factor(newtemp);
                 }
+                
                 else
                     return false;
             }
+            //tree.appendChild(parent, newtemp);
             return true;
         }
         public Boolean addop(Node parent)
@@ -432,12 +440,16 @@ namespace Tiny_Parser
 
             Token AddOpToken = new Token();
             Node Addop_Node = new Node(AddOpToken);
+            Token new_g_token = new Token();
 
             while ((g_token.Tokentype == "PLUS") || (g_token.Tokentype == "MINUS"))
             {
                 /* Make new temp as the new head AddOp*/
-                newtemp.setToken(g_token);
-
+                //newtemp.setToken(g_token);
+                new_g_token.Tokentype=g_token.Tokentype;
+                new_g_token.Tokenvalue=g_token.Tokenvalue;
+                newtemp.setToken(new_g_token);
+                
                 AddOpToken.Tokentype = g_token.Tokentype;
                 if (firstAddOp)
                 {
