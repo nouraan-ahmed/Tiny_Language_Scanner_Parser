@@ -437,11 +437,12 @@ namespace Tiny_Parser
 
             /* first temp is the left child */
             Token old_g_token = new Token();
-            old_g_token.Tokentype = g_token.Tokentype;
-            old_g_token.Tokenvalue = g_token.Tokenvalue;
-            temp.setToken(old_g_token);
+            //old_g_token.Tokentype = g_token.Tokentype;
+            //old_g_token.Tokenvalue = g_token.Tokenvalue;
+            //temp.setToken(old_g_token);
 
             Boolean isTerm = term(parent);
+            temp = parent.getChildren().Last();
             if (!isTerm)
             {
                 return false;
