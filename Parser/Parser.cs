@@ -362,13 +362,13 @@ namespace Tiny_Parser
             //Token MulOpToken = new Token();
             //Node Mulop_Node = new Node(MulOpToken);
             //Token new_g_token = new Token();
-            if (temp.getToken().Tokentype == "OPENBRACKET")
-            {
-                old_g_token.Tokentype = g_token.Tokentype;
-                old_g_token.Tokenvalue = g_token.Tokenvalue;
-                temp.setToken(old_g_token);
+            // if (temp.getToken().Tokentype == "OPENBRACKET")
+            // {
+            //     old_g_token.Tokentype = g_token.Tokentype;
+            //     old_g_token.Tokenvalue = g_token.Tokenvalue;
+            //     temp.setToken(old_g_token);
 
-            }
+            // }
 
 
             while ((g_token.Tokentype == "MULT") || (g_token.Tokentype == "DIV"))
@@ -463,13 +463,13 @@ namespace Tiny_Parser
                 {
                     return false;
                 }
-            if(temp.getToken().Tokentype == "OPENBRACKET")
-            {
-                old_g_token.Tokentype = g_token.Tokentype;
-                old_g_token.Tokenvalue = g_token.Tokenvalue;
-                temp.setToken(old_g_token);
+            // if(temp.getToken().Tokentype == "OPENBRACKET")
+            // {
+            //     old_g_token.Tokentype = g_token.Tokentype;
+            //     old_g_token.Tokenvalue = g_token.Tokenvalue;
+            //     temp.setToken(old_g_token);
 
-            }
+            // }
 
             //} while (g_token.Tokentype == "OPENBRACKET");
 
