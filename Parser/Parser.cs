@@ -199,10 +199,8 @@ namespace Tiny_Parser
             {
                 return false;
             }
-            Node until = new Node(value1);
             tree.appendChild(parent, repeat);
-            tree.appendChild(repeat, until);
-            Boolean result = exp(until);
+            Boolean result = exp(repeat);
             return result;
 
         }
@@ -348,7 +346,7 @@ namespace Tiny_Parser
             Token MulOpToken = new Token();
             Node Mulop_Node = new Node(MulOpToken);
             Token new_g_token = new Token();
-            
+
 
             while ((g_token.Tokentype == "MULT") || (g_token.Tokentype == "DIV"))
             {
@@ -377,7 +375,7 @@ namespace Tiny_Parser
                     tree.appendChild(newtemp, temp);
                     factor(newtemp);
                 }
-                
+
                 else
                     return false;
             }
@@ -446,10 +444,10 @@ namespace Tiny_Parser
             {
                 /* Make new temp as the new head AddOp*/
                 //newtemp.setToken(g_token);
-                new_g_token.Tokentype=g_token.Tokentype;
-                new_g_token.Tokenvalue=g_token.Tokenvalue;
+                new_g_token.Tokentype = g_token.Tokentype;
+                new_g_token.Tokenvalue = g_token.Tokenvalue;
                 newtemp.setToken(new_g_token);
-                
+
                 AddOpToken.Tokentype = g_token.Tokentype;
                 if (firstAddOp)
                 {
