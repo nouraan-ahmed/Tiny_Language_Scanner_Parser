@@ -372,8 +372,8 @@ namespace Tiny_Parser
                 newtemp.setToken(new_g_token);
 
                 MulOpToken.Tokentype = g_token.Tokentype;
-                if (firstMulOp)
-                {
+                //if (firstMulOp)
+                //{
                     Token lastTreeChildToken = new Token();
                     lastTreeChildToken.Tokenvalue = parent.getChildren().Last().getToken().Tokenvalue;
                     lastTreeChildToken.Tokentype = parent.getChildren().Last().getToken().Tokentype;
@@ -381,9 +381,9 @@ namespace Tiny_Parser
                     Node lastTreeChildNode = new Node(lastTreeChildToken);
                     /* delete the first factor node form being the child of the root parent*/
                     parent.getChildren().RemoveAt(parent.getChildrenCount() - 1);
-                    firstMulOp = false;
+                    //firstMulOp = false;
                     tree.appendChild(parent, newtemp);
-                }
+                //}
                 //match the expected token which is MulOp token to the g_token
                 if (mulop(Mulop_Node))
                 {
@@ -464,8 +464,8 @@ namespace Tiny_Parser
                 newtemp.setToken(new_g_token);
                 
                 AddOpToken.Tokentype = g_token.Tokentype;
-                if (firstAddOp)
-                {
+                //if (firstAddOp)
+                //{
                     Token lastTreeChildToken = new Token();
                     lastTreeChildToken.Tokenvalue = parent.getChildren().Last().getToken().Tokenvalue;
                     lastTreeChildToken.Tokentype = parent.getChildren().Last().getToken().Tokentype;
@@ -473,9 +473,9 @@ namespace Tiny_Parser
                     Node lastTreeChildNode = new Node(lastTreeChildToken);
                     /* delete the first factor node form being the child of the root parent*/
                     parent.getChildren().RemoveAt(parent.getChildrenCount() - 1);
-                    firstAddOp = false;
+                    //firstAddOp = false;
                     tree.appendChild(parent, newtemp);
-                }
+                //}
                 //match the expected token which is AddOp token to the g_token
                 if (addop(Addop_Node))
                 {
