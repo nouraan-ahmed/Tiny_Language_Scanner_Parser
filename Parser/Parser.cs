@@ -133,7 +133,6 @@ namespace Tiny_Parser
             Boolean result_match = true;
             result_match = match(value);
             Boolean first_stmt_else = true;
-
             if (!result_match)
             {
                 return false;
@@ -176,7 +175,6 @@ namespace Tiny_Parser
                 {
                     return false;
                 }
-
             }
 
             Token value3 = new Token(null, "END");
@@ -343,29 +341,43 @@ namespace Tiny_Parser
         {
             Boolean firstMulOp = true;
             Node temp = new Node();
-            Node newtemp = new Node();
+            //Node newtemp = new Node();
 
-            /* first temp is the left child */
-            Token old_g_token = new Token();
-            old_g_token.Tokentype = g_token.Tokentype;
-            old_g_token.Tokenvalue = g_token.Tokenvalue;
-            temp.setToken(old_g_token);
+            //do{
+                    /* first temp is the left child */
+                Token old_g_token = new Token();
+                old_g_token.Tokentype = g_token.Tokentype;
+                old_g_token.Tokenvalue = g_token.Tokenvalue;
+                temp.setToken(old_g_token);
 
-            Boolean isFactor = factor(parent);
-            if (!isFactor)
-            {
-                return false;
-            }
+                Boolean isFactor = factor(parent);
+                if (!isFactor)
+                {
+                    return false;
+                }
+            //} while (g_token.Tokentype == "OPENBRACKET");
 
             /* now g_temp is the mulop if it exists */
 
-            Token MulOpToken = new Token();
-            Node Mulop_Node = new Node(MulOpToken);
-            Token new_g_token = new Token();
-            
+            //Token MulOpToken = new Token();
+            //Node Mulop_Node = new Node(MulOpToken);
+            //Token new_g_token = new Token();
+            if (temp.getToken().Tokentype == "OPENBRACKET")
+            {
+                old_g_token.Tokentype = g_token.Tokentype;
+                old_g_token.Tokenvalue = g_token.Tokenvalue;
+                temp.setToken(old_g_token);
+
+            }
+
 
             while ((g_token.Tokentype == "MULT") || (g_token.Tokentype == "DIV"))
             {
+                Node newtemp = new Node();
+                Token MulOpToken = new Token();
+                Node Mulop_Node = new Node(MulOpToken);
+                Token new_g_token = new Token();
+
                 /* Make new temp as the new head MulOp*/
                 //newtemp.setToken(g_token);
                 new_g_token.Tokentype = g_token.Tokentype;
@@ -376,10 +388,10 @@ namespace Tiny_Parser
                 //if (firstMulOp)
                 //{
                     Token lastTreeChildToken = new Token();
-                    lastTreeChildToken.Tokenvalue = parent.getChildren().Last().getToken().Tokenvalue;
-                    lastTreeChildToken.Tokentype = parent.getChildren().Last().getToken().Tokentype;
-                    /* Put the first factor in this node*/
-                    Node lastTreeChildNode = new Node(lastTreeChildToken);
+                    //lastTreeChildToken.Tokenvalue = parent.getChildren().Last().getToken().Tokenvalue;
+                    //lastTreeChildToken.Tokentype = parent.getChildren().Last().getToken().Tokentype;
+                    ///* Put the first factor in this node*/
+                    //Node lastTreeChildNode = new Node(lastTreeChildToken);
                     /* delete the first factor node form being the child of the root parent*/
                     parent.getChildren().RemoveAt(parent.getChildrenCount() - 1);
                     //firstMulOp = false;
@@ -390,6 +402,7 @@ namespace Tiny_Parser
                 {
                     tree.appendChild(newtemp, temp);
                     factor(newtemp);
+                    temp = newtemp;
                 }
                 
                 else
@@ -439,17 +452,27 @@ namespace Tiny_Parser
             Node newtemp = new Node();
 
             /* first temp is the left child */
-            Token old_g_token = new Token();
-            //old_g_token.Tokentype = g_token.Tokentype;
-            //old_g_token.Tokenvalue = g_token.Tokenvalue;
-            //temp.setToken(old_g_token);
+            //do {
+                Token old_g_token = new Token();
+                old_g_token.Tokentype = g_token.Tokentype;
+                old_g_token.Tokenvalue = g_token.Tokenvalue;
+                temp.setToken(old_g_token);
 
-            Boolean isTerm = term(parent);
-            temp = parent.getChildren().Last();
-            if (!isTerm)
+                Boolean isTerm = term(parent);
+                if (!isTerm)
+                {
+                    return false;
+                }
+            if(temp.getToken().Tokentype == "OPENBRACKET")
             {
-                return false;
+                old_g_token.Tokentype = g_token.Tokentype;
+                old_g_token.Tokenvalue = g_token.Tokenvalue;
+                temp.setToken(old_g_token);
+
             }
+
+            //} while (g_token.Tokentype == "OPENBRACKET");
+
 
             /* now g_temp is the addop if it exists */
 
@@ -483,6 +506,7 @@ namespace Tiny_Parser
                 {
                     tree.appendChild(newtemp, temp);
                     term(newtemp);
+                    temp = newtemp;
                 }
                 else
                     return false;
@@ -519,7 +543,7 @@ namespace Tiny_Parser
                     Token t1 = new Token(null, "NUMBER");
                     if (match(t1))
                     {
-                        Node fact_node1 = new Node(fact);
+                        Node fact_node1 = new Node(t1);
                         tree.appendChild(parent, fact_node1);
                         return true;
                     }
@@ -529,7 +553,7 @@ namespace Tiny_Parser
                     Token t2 = new Token(null, "IDENTIFIER");
                     if (match(t2))
                     {
-                        Node fact_node2 = new Node(fact);
+                        Node fact_node2 = new Node(t2);
                         tree.appendChild(parent, fact_node2);
                         return true;
                     }
