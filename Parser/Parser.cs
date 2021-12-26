@@ -449,17 +449,18 @@ namespace Tiny_Parser
         {
             Boolean firstAddOp = true;
             Node temp = new Node();
-            Node newtemp = new Node();
+            //Node newtemp = new Node();
 
             /* first temp is the left child */
             //do {
                 Token old_g_token = new Token();
-                old_g_token.Tokentype = g_token.Tokentype;
-                old_g_token.Tokenvalue = g_token.Tokenvalue;
-                temp.setToken(old_g_token);
+                //old_g_token.Tokentype = g_token.Tokentype;
+                //old_g_token.Tokenvalue = g_token.Tokenvalue;
+                //temp.setToken(old_g_token);
 
                 Boolean isTerm = term(parent);
-                if (!isTerm)
+            temp = parent.getChildren().Last();
+            if (!isTerm)
                 {
                     return false;
                 }
@@ -482,6 +483,7 @@ namespace Tiny_Parser
 
             while ((g_token.Tokentype == "PLUS") || (g_token.Tokentype == "MINUS"))
             {
+                Node newtemp = new Node();
                 /* Make new temp as the new head AddOp*/
                 //newtemp.setToken(g_token);
                 new_g_token.Tokentype=g_token.Tokentype;
