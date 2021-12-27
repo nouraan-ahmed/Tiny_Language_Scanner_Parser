@@ -380,6 +380,7 @@ namespace Tiny_Parser
 
                 else
                     return false;
+
             }
             return true;
         }
@@ -471,6 +472,7 @@ namespace Tiny_Parser
             }
             return true;
         }
+
 
         public Boolean factor(Node parent)
         {
