@@ -339,74 +339,49 @@ namespace Tiny_Parser
         //term → factor {mulop factor}
         public Boolean term(Node parent)
         {
-            Boolean firstMulOp = true;
+
             Node temp = new Node();
-            //Node newtemp = new Node();
 
-            //do{
-                    /* first temp is the left child */
-                Token old_g_token = new Token();
-                old_g_token.Tokentype = g_token.Tokentype;
-                old_g_token.Tokenvalue = g_token.Tokenvalue;
-                temp.setToken(old_g_token);
-
-                Boolean isFactor = factor(parent);
-                if (!isFactor)
-                {
-                    return false;
-                }
-            //} while (g_token.Tokentype == "OPENBRACKET");
+            Boolean isFactor = factor(parent);
+            if (!isFactor)
+            {
+                return false;
+            }
 
             /* now g_temp is the mulop if it exists */
 
-            //Token MulOpToken = new Token();
-            //Node Mulop_Node = new Node(MulOpToken);
-            //Token new_g_token = new Token();
-            // if (temp.getToken().Tokentype == "OPENBRACKET")
-            // {
-            //     old_g_token.Tokentype = g_token.Tokentype;
-            //     old_g_token.Tokenvalue = g_token.Tokenvalue;
-            //     temp.setToken(old_g_token);
-
-            // }
+            Token MulOpToken = new Token();
+            Node Mulop_Node = new Node(MulOpToken);
 
 
             while ((g_token.Tokentype == "MULT") || (g_token.Tokentype == "DIV"))
             {
-                Node newtemp = new Node();
-                Token MulOpToken = new Token();
-                Node Mulop_Node = new Node(MulOpToken);
                 Token new_g_token = new Token();
-
+                Node newtemp = new Node();
                 /* Make new temp as the new head MulOp*/
                 //newtemp.setToken(g_token);
                 new_g_token.Tokentype = g_token.Tokentype;
                 new_g_token.Tokenvalue = g_token.Tokenvalue;
-                newtemp.setToken(new_g_token);
 
                 MulOpToken.Tokentype = g_token.Tokentype;
-                //if (firstMulOp)
-                //{
-                    Token lastTreeChildToken = new Token();
-                    //lastTreeChildToken.Tokenvalue = parent.getChildren().Last().getToken().Tokenvalue;
-                    //lastTreeChildToken.Tokentype = parent.getChildren().Last().getToken().Tokentype;
-                    ///* Put the first factor in this node*/
-                    //Node lastTreeChildNode = new Node(lastTreeChildToken);
-                    /* delete the first factor node form being the child of the root parent*/
-                    parent.getChildren().RemoveAt(parent.getChildrenCount() - 1);
-                    //firstMulOp = false;
-                    tree.appendChild(parent, newtemp);
-                //}
-                //match the expected token which is MulOp token to the g_token
+                // assign the last child of the tree to temp node 
+                temp = parent.getChildren().Last();
+                /* delete the first factor node form being the child of the root parent*/
+                parent.getChildren().RemoveAt(parent.getChildrenCount() - 1);
+                // assign the mulop node to newtemp node
+                newtemp.setToken(new_g_token);
+                tree.appendChild(parent, newtemp);
+
+                // consume the mulop token
                 if (mulop(Mulop_Node))
                 {
                     tree.appendChild(newtemp, temp);
                     factor(newtemp);
-                    temp = newtemp;
                 }
-                
+
                 else
                     return false;
+
             }
             //tree.appendChild(parent, newtemp);
             return true;
@@ -443,27 +418,19 @@ namespace Tiny_Parser
             else
                 return false;
         }
-        //term {addop term}
+
         // simple-exp → simple-exp  addop  term | term
         public Boolean simple_exp(Node parent)
         {
-            Boolean firstAddOp = true;
+
             Node temp = new Node();
-            //Node newtemp = new Node();
 
-            /* first temp is the left child */
-            //do {
-                Token old_g_token = new Token();
-                //old_g_token.Tokentype = g_token.Tokentype;
-                //old_g_token.Tokenvalue = g_token.Tokenvalue;
-                //temp.setToken(old_g_token);
-
-                Boolean isTerm = term(parent);
-            temp = parent.getChildren().Last();
+            Boolean isTerm = term(parent);
+            //temp = parent.getChildren().Last();
             if (!isTerm)
-                {
-                    return false;
-                }
+            {
+                return false;
+            }
             // if(temp.getToken().Tokentype == "OPENBRACKET")
             // {
             //     old_g_token.Tokentype = g_token.Tokentype;
@@ -479,36 +446,32 @@ namespace Tiny_Parser
 
             Token AddOpToken = new Token();
             Node Addop_Node = new Node(AddOpToken);
-            Token new_g_token = new Token();
+
 
             while ((g_token.Tokentype == "PLUS") || (g_token.Tokentype == "MINUS"))
             {
+                Token new_g_token = new Token();
                 Node newtemp = new Node();
                 /* Make new temp as the new head AddOp*/
                 //newtemp.setToken(g_token);
-                new_g_token.Tokentype=g_token.Tokentype;
-                new_g_token.Tokenvalue=g_token.Tokenvalue;
-                newtemp.setToken(new_g_token);
-                
+                new_g_token.Tokentype = g_token.Tokentype;
+                new_g_token.Tokenvalue = g_token.Tokenvalue;
+                //newtemp.setToken(new_g_token);
+
                 AddOpToken.Tokentype = g_token.Tokentype;
-                //if (firstAddOp)
-                //{
-                    Token lastTreeChildToken = new Token();
-                    lastTreeChildToken.Tokenvalue = parent.getChildren().Last().getToken().Tokenvalue;
-                    lastTreeChildToken.Tokentype = parent.getChildren().Last().getToken().Tokentype;
-                    /* Put the first factor in this node*/
-                    Node lastTreeChildNode = new Node(lastTreeChildToken);
-                    /* delete the first factor node form being the child of the root parent*/
-                    parent.getChildren().RemoveAt(parent.getChildrenCount() - 1);
-                    //firstAddOp = false;
-                    tree.appendChild(parent, newtemp);
-                //}
-                //match the expected token which is AddOp token to the g_token
+                // assign the last child of the tree to temp node
+                temp = parent.getChildren().Last();
+                /* delete the last addop node form being the child of the root parent*/
+                parent.getChildren().RemoveAt(parent.getChildrenCount() - 1);
+                // assign the new addop node to newtemp node 
+                newtemp.setToken(new_g_token);
+                tree.appendChild(parent, newtemp);
+
+                // consume the AddOp token
                 if (addop(Addop_Node))
                 {
                     tree.appendChild(newtemp, temp);
                     term(newtemp);
-                    temp = newtemp;
                 }
                 else
                     return false;
@@ -516,6 +479,7 @@ namespace Tiny_Parser
             return true;
 
         }
+
 
         public Boolean factor(Node parent)
         {
