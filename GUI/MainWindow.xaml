@@ -31,7 +31,7 @@
 
 
         <ScrollViewer x:Name="scroll" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto" Margin="25,57,30,82" Grid.ColumnSpan="2" Visibility="Visible">
-            <Canvas x:Name="syntax_tree_canvas" Margin="0,0,0,0" Grid.ColumnSpan="1" Visibility="Visible" MinWidth="703" MinHeight="350" Height="1123"></Canvas>
+            <Canvas x:Name="syntax_tree_canvas" Margin="0,0,0,0" Grid.ColumnSpan="1" Visibility="Visible" MinWidth="703" MinHeight="50" Height = "350"></Canvas>
         </ScrollViewer>
 
     </Grid>

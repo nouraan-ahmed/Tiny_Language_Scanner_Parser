@@ -225,7 +225,7 @@ namespace Tiny_Parser
             MyCanvas.Children.Add(horizontal_line);
 
             MyCanvas.Width = last_left_margin + 80 + 30;
-            MyCanvas.Height = (MyCanvas.Height < last_top_margin)? last_top_margin + 50 + 10 : MyCanvas.Height;
+            MyCanvas.Height = (MyCanvas.Height <= last_top_margin)? last_top_margin + 50 + 10 : MyCanvas.Height;
         }
 
 
