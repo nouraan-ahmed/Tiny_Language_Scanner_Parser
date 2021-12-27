@@ -73,7 +73,7 @@ namespace Tiny_Parser
                 if (fileLen == 0 || (fileLen == 3 && File.ReadAllBytes("file").SequenceEqual(new byte[] { 239, 187, 191 })))
                 {
                     /* Is empty */
-                    MessageBox.Show("An empty file can not be scanned.\nPlease, choose a non empty file", "Browse error", MessageBoxButton.OK, MessageBoxImage.Error);
+                    MessageBox.Show("An empty file can not be scanned.\nPlease, choose a non empty file", "Browse Error", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
 
                 else
@@ -223,10 +223,18 @@ namespace Tiny_Parser
             tree.appendChild(n3, n24);
             tree.appendChild(n24, n25);*/
             Parser parse = new Parser(input_text.Text, tree);
-            parse.program(tree.getTreeRoot());
-
-            DrawSyntaxTree draw = new DrawSyntaxTree(syntax_tree_canvas);
-            tree.traverseTree(draw.Draw_Child_Node);
+            Boolean result = parse.program(tree.getTreeRoot());
+            if(result == true)
+            {
+                DrawSyntaxTree draw = new DrawSyntaxTree(syntax_tree_canvas);
+                tree.traverseTree(draw.Draw_Child_Node);
+            }
+            else
+            {
+                Hide_Page2();
+                Show_Page1();
+                MessageBox.Show("There is an error in your code, please revise your code according to the rules of Tiny Language", "Parsing Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
 
         }
 
