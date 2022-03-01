@@ -1,0 +1,4 @@
+no need to reopen the program to parse more than one file
+empty file
+non existent file
+consistent user flow
